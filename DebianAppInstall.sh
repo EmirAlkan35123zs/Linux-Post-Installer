@@ -5,8 +5,8 @@ USER_ACTUEL=$(whoami)
 set -e
 
 # Exemple de confort (à mettre au début)
-echo "⌛ Attente de 3 secondes avant de commencer..."
-sleep 3
+echo "⌛ Attente de 1 secondes avant de commencer..."
+sleep 1
 
 echo "🚀 Lancement de l'installation Emir-Prime..."
 echo "👤 Utilisateur détecté : $USER_ACTUEL"
@@ -21,39 +21,38 @@ demander_confirmation() {
 }
 
 # =====================================================================
-# 1. (1) METRE A JOUR
+# 1. METRE A JOUR
 # =====================================================================
 if demander_confirmation "Mise A Jours"; then
       sudo apt update && sudo apt upgrade -y
 fi
 
 # =====================================================================
-# 2. Installer NeoFetch
+# 2. Installer FastFetch
 # =====================================================================
 if demander_confirmation "L'installation de NeoFetch"; then
     sudo apt install -y fastfetch
 fi
 
 # =====================================================================
-# 2.5. Installer Les Outil pour La compilation de kernel linux
+# 2.5. Installer Les Outil pour La compilation de linux
 # =====================================================================
 if demander_confirmation "L'installation de outil kernel linux"; then
       sudo apt-get install build-essential libncurses-dev bison flex libssl-dev libelf-dev bc initramfs-tools debian-archive-keyring grub-pc ovmf guestfish libguestfs-tools guestfs-tools linux-headers-generic net-tools -y
 fi
 
 # =====================================================================
-# 3. MISE À JOUR & WINE
+# 3. WINE
 # =====================================================================
-if demander_confirmation "La mise à jour système et le support Wine (32-bit)"; then
+if demander_confirmation "Installation de Wine (32-bit)"; then
     sudo dpkg --add-architecture i386
-    sudo apt update && sudo apt upgrade -y
     sudo apt install -y wine wine32 wine64 libwine libwine:i386 fonts-wine
 fi
 
 # =====================================================================
 # 4. OUTILS DE DEV & WEB
 # =====================================================================
-if demander_confirmation "Les outils de Dev, Serveur Web Apache et MariaDB SQL"; then
+if demander_confirmation "Les outils de Dev, Serveur Web Apache et MariaDB SQL Classic"; then
     sudo apt install -y nasm build-essential python3 python3-pip qemu-system qemu-utils clang gimp debootstrap wget gpg gcc apache2 mariadb-server -y
     sudo a2enmod autoindex env mime negotiation setenvif filter deflate status reqtimeout
     sudo a2ensite 000-default
@@ -66,7 +65,7 @@ if demander_confirmation "Le gestionnaire Flatpak et le dépôt Flathub"; then
     sudo apt install -y flatpak
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-    APPS=("org.vinegarhq.Sober" "org.vinegarhq.Vinegar" "com.valvesoftware.Steam" "com.discordapp.Discord" "com.visualstudio.code" "com.adobe.Flash-Player-Projector" "com.jpexs.decompiler.flash" "org.videolan.VLC" "com.mattjakeman.ExtensionManager")
+    APPS=("org.vinegarhq.Sober" "org.vinegarhq.Vinegar" "com.valvesoftware.Steam" "com.discordapp.Discord" "com.adobe.Flash-Player-Projector" "com.jpexs.decompiler.flash" "org.videolan.VLC" "com.mattjakeman.ExtensionManager")
 
     for app in "${APPS[@]}"; do
         if demander_confirmation "Installer $app ?"; then
@@ -76,10 +75,14 @@ if demander_confirmation "Le gestionnaire Flatpak et le dépôt Flathub"; then
 fi
 
 # =====================================================================
-# 6. NETTOYAGE FINAL
+# 6. NETTOYAGE et REDAIMMARAGE FINAL
 # =====================================================================
 echo "🧹🔄️ Mise a Jours et Nettoyage..."
 sudo apt autoremove -y
 
 echo "✅ Installation terminée !"
-echo "🚀 N'oublie pas de faire : (sudo reboot) pour appliquer tous les changements !"
+if demander_confirmation "🚀 Veux-tu redémarrer maintenant pour appliquer les changements ?"; then
+    sudo reboot
+else
+    echo "Redémarrage annulé."
+fi
