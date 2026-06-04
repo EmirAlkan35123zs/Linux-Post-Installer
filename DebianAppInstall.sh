@@ -21,32 +21,17 @@ demander_confirmation() {
 }
 
 # =====================================================================
-# 0. (1) METRE A JOUR
+# 1. (1) METRE A JOUR
 # =====================================================================
 if demander_confirmation "Mise A Jours"; then
       sudo apt update && sudo apt upgrade -y
 fi
 
 # =====================================================================
-# 1. PASSAGE EN ADMIN VIA LE COMPTE ROOT
-# =====================================================================
-if demander_confirmation "L'accès Admin (Sudoers) pour l'utilisateur $USER_ACTUEL"; then
-    if groups | grep -qw sudo; then
-        echo "✅ Tu as déjà les privilèges Admin."
-    elif [ "$USER_ACTUEL" != "root" ]; then
-        echo "🔒 Configuration des droits Sudo..."
-        # On utilise sudo ici, en supposant que l'utilisateur a le mot de passe de son propre compte
-        # C'est la méthode standard sous Debian/Ubuntu
-        su -c "apt update && apt install -y sudo && usermod -aG sudo $USER_ACTUEL && echo '$USER_ACTUEL ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/$USER_ACTUEL-prime && chmod 0440 /etc/sudoers.d/$USER_ACTUEL-prime"
-        echo "✅ Privilèges Admin configurés !"
-    fi
-fi
-
-# =====================================================================
 # 2. Installer NeoFetch
 # =====================================================================
 if demander_confirmation "L'installation de NeoFetch"; then
-    sudo apt install -y neofetch
+    sudo apt install -y fastfetch
 fi
 
 # =====================================================================
