@@ -30,7 +30,7 @@ fi
 # =====================================================================
 # 2. Installer FastFetch
 # =====================================================================
-if demander_confirmation "L'installation de NeoFetch"; then
+if demander_confirmation "L'installation de FastFetch"; then
     sudo apt install -y fastfetch
 fi
 
