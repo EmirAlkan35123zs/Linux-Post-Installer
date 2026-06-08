@@ -37,7 +37,7 @@ fi
 # =====================================================================
 if demander_confirmation "L'installation des outils de compilation kernel"; then
      # base-devel est le pack indispensable sur Arch
-     sudo pacman -S --noconfirm base-devel linux-headers bison flex bc qemu-full virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat libguestfs
+   sudo pacman -S --noconfirm base-devel linux-headers bison flex bc qemu-full virt-manager virt-viewer dnsmasq vde2 openbsd-netcat libguestfs
 fi
 
 # =====================================================================
