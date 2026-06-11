@@ -58,10 +58,20 @@ if demander_confirmation "Les outils de Dev, Serveur Web Apache et MariaDB"; the
 fi
 
 # =====================================================================
-# 4.5. DISCORD ET STEAM (via APT)
+# 4.5. DISCORD ET STEAM (via APT ou Installation directe)
 # =====================================================================
-if demander_confirmation "L'installation de Discord et Steam via APT"; then
-    sudo apt install -y discord steam
+if demander_confirmation "L'installation de Discord et Steam"; then
+    
+    # Pour Steam (il est bien dans le dépôt multiverse)
+    sudo add-apt-repository multiverse -y
+    sudo apt update
+    sudo apt install -y steam
+    
+    # Pour Discord (téléchargement et installation du .deb)
+    echo "Téléchargement de Discord..."
+    wget -O discord.deb "https://discord.com/api/download?platform=linux&format=deb"
+    sudo apt install -y ./discord.deb
+    rm discord.deb
 fi
 
 # =====================================================================
