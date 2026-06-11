@@ -78,15 +78,21 @@ fi
 # 5. CONFIGURATION FLATPAK
 # =====================================================================
 if demander_confirmation "Le gestionnaire Flatpak et le dépôt Flathub"; then
+    # 1. Installation du paquet flatpak
     sudo apt install -y flatpak
-    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    
+    # 2. Ajout du dépôt Flathub (une seule fois suffit, en sudo)
+    echo "Configuration du dépôt Flathub..."
     sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-    # Liste sans discord ni steam
+    # 3. Liste des applications
     APPS=("org.vinegarhq.Sober" "org.vinegarhq.Vinegar" "com.adobe.Flash-Player-Projector" "com.jpexs.decompiler.flash" "org.videolan.VLC" "com.mattjakeman.ExtensionManager")
 
+    # 4. Boucle d'installation
     for app in "${APPS[@]}"; do
         if demander_confirmation "Installer $app ?"; then
+            # Pas besoin de sudo pour installer des apps flatpak 
+            # (sauf si tu veux les installer pour tout le système, mais le défaut utilisateur est mieux)
             flatpak install -y flathub "$app"
         fi
     done
