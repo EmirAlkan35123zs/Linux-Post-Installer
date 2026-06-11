@@ -80,6 +80,7 @@ fi
 if demander_confirmation "Le gestionnaire Flatpak et le dépôt Flathub"; then
     sudo apt install -y flatpak
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
     # Liste sans discord ni steam
     APPS=("org.vinegarhq.Sober" "org.vinegarhq.Vinegar" "com.adobe.Flash-Player-Projector" "com.jpexs.decompiler.flash" "org.videolan.VLC" "com.mattjakeman.ExtensionManager")
