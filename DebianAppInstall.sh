@@ -58,13 +58,21 @@ if demander_confirmation "Les outils de Dev, Serveur Web Apache et MariaDB"; the
 fi
 
 # =====================================================================
+# 4.5. DISCORD ET STEAM (via APT)
+# =====================================================================
+if demander_confirmation "L'installation de Discord et Steam via APT"; then
+    sudo apt install -y discord steam
+fi
+
+# =====================================================================
 # 5. CONFIGURATION FLATPAK
 # =====================================================================
 if demander_confirmation "Le gestionnaire Flatpak et le dépôt Flathub"; then
     sudo apt install -y flatpak
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-    APPS=("org.vinegarhq.Sober" "org.vinegarhq.Vinegar" "com.valvesoftware.Steam" "com.discordapp.Discord" "com.adobe.Flash-Player-Projector" "com.jpexs.decompiler.flash" "org.videolan.VLC" "com.mattjakeman.ExtensionManager")
+    # Liste sans discord ni steam
+    APPS=("org.vinegarhq.Sober" "org.vinegarhq.Vinegar" "com.adobe.Flash-Player-Projector" "com.jpexs.decompiler.flash" "org.videolan.VLC" "com.mattjakeman.ExtensionManager")
 
     for app in "${APPS[@]}"; do
         if demander_confirmation "Installer $app ?"; then
