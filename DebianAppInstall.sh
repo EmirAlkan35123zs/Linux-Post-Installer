@@ -52,7 +52,7 @@ fi
 # 4. OUTILS DE DEV & WEB
 # =====================================================================
 if demander_confirmation "Les outils de Dev, Serveur Web Apache et MariaDB"; then
-    sudo apt install -y nasm build-essential python3 python3-pip qemu-system qemu-utils clang gimp debootstrap wget gpg gcc apache2 mariadb-server
+    sudo apt install -y nasm build-essential python3 python3-pip qemu-system qemu-utils clang gimp debootstrap wget gpg gcc apache2 mariadb-server xorriso
     sudo a2enmod autoindex env mime negotiation setenvif filter deflate status reqtimeout
     sudo a2ensite 000-default
 fi
